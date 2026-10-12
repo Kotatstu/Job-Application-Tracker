@@ -1,6 +1,6 @@
 @backend_HostAddress = http://localhost:5083
-@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3ODg4Njc4OTMsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.wpsM8f9Z4gvZO7JybNR5_CG24DtlSBifmTsQxYvMwjI
-@refresh_Token = stFWLh85ETTW%2BVOHNYU2INiF%2BDIzWXjiJsd2nDlEYVx61dXJD6sKpDKsy%2F56zevYhQ2laA6r1OX8kyAVrgVVPQ%3D%3D
+@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTE3ODM2OTUsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.P-ZH5stvLAZOCgvWEy1bDoJ-jizfFGFtdr5peGNk_TY
+@refresh_Token = HYgSNbMDW6DMOPseFSAxzNNHL69dV1w2rZ5tFwnzmOggzzW7o6igcvBfCnrx37htJJ6Sw%2Fney9wESX7f%2Bit2nQ%3D%3D
 //====================================================================== COMPANY ====================================================================
 
 GET {{backend_HostAddress}}/api/companies/getAll
@@ -134,3 +134,13 @@ POST {{backend_HostAddress}}/api/auth/refresh
 Content-Type: application/json
 Cookie: refresh_token=LsUAI%2BhzZFHLSVyXNC3mD80g4CG4mmmUKbVIQ1xkCUzUdGQ9I1IdgVVuIBMZo5TIKKId1XFlMVqk%2FjG%2FAaOOdw%3D%3D
 
+//================================================================= CALLING PHI4-MINI ====================================================
+###Email response testing
+POST {{backend_HostAddress}}/api/emailTest/classify
+Content-Type: application/json
+Cookie: access_token={{access_Token}}
+
+{
+  "subject": "Update on your application",
+  "body": "Thank you for interviewing for the Backend Engineer role at Stripe. Unfortunately we have decided to move forward with other candidates."
+}
