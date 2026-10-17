@@ -1,6 +1,6 @@
 # Job Application Tracker
 
-A full-stack web app for tracking job applications — company, role,
+A full-stack web app for tracking job applications - company, role,
 status history, and the original job posting, all in one place. Built
 as a learning project to practice a clean, layered ASP.NET Core
 backend paired with a modern React frontend, with real authentication
@@ -86,8 +86,8 @@ The dev server proxies `/api` requests to the backend — see
 
 ## Roadmap
 
-- [x] Core CRUD (applications, companies, status history, posting details)
+- [x] Core CRUD
 - [x] Authentication (Identity, JWT, refresh rotation)
 - [x] Frontend (all core pages, shadcn/ui design pass)
 - [ ] Gmail integration — detect application-related emails
-- [ ] Review queue for email-detected updates (never auto-applied)
+- [ ] Review queue for email-detected updates
