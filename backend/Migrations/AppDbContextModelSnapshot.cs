@@ -251,6 +251,8 @@ namespace backend.Migrations
 
                     b.HasIndex("JobApplicationId");
 
+                    b.HasIndex("SourceEmailId");
+
                     b.ToTable("ApplicationStatusHistory");
                 });
 
@@ -284,6 +286,56 @@ namespace backend.Migrations
                         .IsUnique();
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("backend.Models.EmailMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalMessageId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsJobRelated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Kind")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReceivedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Snippet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "ExternalMessageId")
+                        .IsUnique();
+
+                    b.ToTable("EmailMessages");
                 });
 
             modelBuilder.Entity("backend.Models.JobApplication", b =>
@@ -364,6 +416,138 @@ namespace backend.Migrations
                         .IsUnique();
 
                     b.ToTable("JobPostingDetails");
+                });
+
+            modelBuilder.Entity("backend.Models.MailboxConnection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ConnectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EncryptedRefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoogleEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastHistoryId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastSyncedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Provider")
+                        .IsUnique();
+
+                    b.ToTable("MailboxConnections");
+                });
+
+            modelBuilder.Entity("backend.Models.PendingJobApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CompanyNameGuess")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DetectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmailMessageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("JobTitleGuess")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LinkedJobApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusGuess")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmailMessageId")
+                        .IsUnique();
+
+                    b.HasIndex("LinkedJobApplicationId");
+
+                    b.ToTable("PendingJobApplications");
+                });
+
+            modelBuilder.Entity("backend.Models.PendingStatusChange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DetectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmailMessageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NoteGuess")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusGuess")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SuggestedJobApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmailMessageId")
+                        .IsUnique();
+
+                    b.HasIndex("SuggestedJobApplicationId");
+
+                    b.ToTable("PendingStatusChanges");
                 });
 
             modelBuilder.Entity("backend.Models.RefreshToken", b =>
@@ -457,6 +641,11 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Models.EmailMessage", null)
+                        .WithMany()
+                        .HasForeignKey("SourceEmailId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("JobApplication");
                 });
 
@@ -480,6 +669,38 @@ namespace backend.Migrations
                         .IsRequired();
 
                     b.Navigation("JobApplication");
+                });
+
+            modelBuilder.Entity("backend.Models.PendingJobApplication", b =>
+                {
+                    b.HasOne("backend.Models.EmailMessage", "EmailMessage")
+                        .WithMany()
+                        .HasForeignKey("EmailMessageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.JobApplication", null)
+                        .WithMany()
+                        .HasForeignKey("LinkedJobApplicationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("EmailMessage");
+                });
+
+            modelBuilder.Entity("backend.Models.PendingStatusChange", b =>
+                {
+                    b.HasOne("backend.Models.EmailMessage", "EmailMessage")
+                        .WithMany()
+                        .HasForeignKey("EmailMessageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.JobApplication", null)
+                        .WithMany()
+                        .HasForeignKey("SuggestedJobApplicationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("EmailMessage");
                 });
 #pragma warning restore 612, 618
         }

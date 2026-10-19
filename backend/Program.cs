@@ -69,12 +69,23 @@ builder.Services.AddHttpClient<IJobEmailClassifier, OllamaJobEmailClassifier>((s
     client.Timeout = TimeSpan.FromMinutes(3); // first call after the model unloads, has to reload it
 });
 
+builder.Services.AddOptions<GoogleOptions>()
+    .Bind(builder.Configuration.GetSection("Google"))
+    .Validate(o => !string.IsNullOrWhiteSpace(o.ClientId)
+                && !string.IsNullOrWhiteSpace(o.ClientSecret)
+                && !string.IsNullOrWhiteSpace(o.RedirectUri),
+              "Google:ClientId, Google:ClientSecret and Google:RedirectUri must all be configured.")
+    .ValidateOnStart();
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddDataProtection();
+builder.Services.AddSingleton<ITokenProtector, TokenProtector>();
 
 var app = builder.Build();
 

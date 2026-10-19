@@ -1,6 +1,6 @@
 @backend_HostAddress = http://localhost:5083
-@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTE3ODM2OTUsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.P-ZH5stvLAZOCgvWEy1bDoJ-jizfFGFtdr5peGNk_TY
-@refresh_Token = HYgSNbMDW6DMOPseFSAxzNNHL69dV1w2rZ5tFwnzmOggzzW7o6igcvBfCnrx37htJJ6Sw%2Fney9wESX7f%2Bit2nQ%3D%3D
+@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI0MTExMzIsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.6USQFEdyuUrrn78J2UACtlzqZrJxD1r57RzRdlByzL4
+@refresh_Token = Erub%2Fz1kHiEWo0g4rQvGI93hyazfWdJ2ixx0x%2BwVe1gLYilvruDQGTuYS1ntBky%2FLRegSleHWwaRMbol%2Fege3Q%3D%3D
 //====================================================================== COMPANY ====================================================================
 
 GET {{backend_HostAddress}}/api/companies/getAll
@@ -142,5 +142,14 @@ Cookie: access_token={{access_Token}}
 
 {
   "subject": "Update on your application",
-  "body": "Thank you for interviewing for the Backend Engineer role at Stripe. Unfortunately we have decided to move forward with other candidates."
+  //"body": "Hi Nguyen Hoang Long, Thank you for choosing Qualcomm. We have received your application for the position AI Resident (Engineering) - 3097473 . Our team is currently reviewing your profile and will reach out if there are any updates. At Qualcomm, inventors turn challenges into breakthroughs. With people at the heart of everything we do, we unlock limitless potential so bold ideas can become the next generation of innovation. To stay connected, we invite you to sign up for your Eightfold account. By signing in to Eightfold, you’ll be able to: • Receive real-time updates on your Qualcomm application • Explore our business, culture, and career opportunities • Discover roles that align with your skills and interestsThank you again for your interest in Qualcomm—we look forward to staying connected.Best regards,Qualcomm Talent Acquisition TeamWhy Qualcomm?Career Development - We prioritize opportunities for continuous learning with career development programs, employee recognition initiatives, tuition reimbursement, and mentorship, all so our employees can exceed their potential.Corporate Responsibility - We invent technologies that have the power to catalyze social change and the potential to have a positive impact on society for the better-for everyone. Click here to learn more.We are limitless."
+  "body": "This is a test email promt, not job related"
 }
+
+###encrypt a sample
+GET {{backend_HostAddress}}/api/emailTest/protectSample
+Cookie: access_token={{access_Token}}
+
+###after RESTARTING the backend, paste the protectedValue from above
+GET {{backend_HostAddress}}/api/emailTest/unprotectSample?value=PASTE_VALUE_HERE
+Cookie: access_token={{access_Token}}
