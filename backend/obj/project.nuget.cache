@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "NhZ758MRDcE=",
+  "dgSpecHash": "EbEj72FKE7s=",
   "success": true,
   "projectFilePath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\talal\\.nuget\\packages\\azure.core\\1.50.0\\azure.core.1.50.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\google.apis\\1.77.0\\google.apis.1.77.0.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\google.apis.auth\\1.77.0\\google.apis.auth.1.77.0.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\google.apis.core\\1.77.0\\google.apis.core.1.77.0.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\google.apis.gmail.v1\\1.77.0.4295\\google.apis.gmail.v1.1.77.0.4295.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.11\\microsoft.aspnetcore.authentication.jwtbearer.10.0.11.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.11\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.11.nupkg.sha512",
@@ -45,7 +49,7 @@
     "C:\\Users\\talal\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.clientmodel\\1.8.0\\system.clientmodel.1.8.0.nupkg.sha512",
-    "C:\\Users\\talal\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.composition.attributedmodel\\9.0.0\\system.composition.attributedmodel.9.0.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.composition.convention\\9.0.0\\system.composition.convention.9.0.0.nupkg.sha512",
@@ -54,6 +58,7 @@
     "C:\\Users\\talal\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.11\\system.configuration.configurationmanager.9.0.11.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.19.2\\system.identitymodel.tokens.jwt.8.19.2.nupkg.sha512",
+    "C:\\Users\\talal\\.nuget\\packages\\system.management\\7.0.2\\system.management.7.0.2.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.11\\system.security.cryptography.pkcs.9.0.11.nupkg.sha512",
     "C:\\Users\\talal\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.11\\system.security.cryptography.protecteddata.9.0.11.nupkg.sha512"
@@ -79,6 +84,30 @@
       "warningLevel": 1,
       "filePath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
       "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Pkcs' 9.0.11 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-2fmv-rv2c-59x7",
+      "projectPath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Pkcs' 9.0.11 has a known high severity vulnerability, https://github.com/advisories/GHSA-846f-f764-76mx",
+      "projectPath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\talal\\Desktop\\TaiLieu\\Code\\VS\\JobApplicationTracker\\backend\\backend.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
       "targetGraphs": [
         "net10.0"
       ]

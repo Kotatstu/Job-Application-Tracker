@@ -1,6 +1,7 @@
 using backend.Controllers;
 using backend.DTOs;
 using backend.Interfaces;
+using backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -46,5 +47,40 @@ public class EmailTestController : ApiControllerBase
         {
             return Ok(new { decrypts = false });
         }
+    }
+
+    [HttpGet]
+    [Route("gmailNew")]
+    public async Task<IActionResult> GmailNew(
+        [FromServices] IGmailReader reader,
+        [FromQuery] int max = 10,
+        [FromQuery] bool classify = true,
+        CancellationToken ct = default)
+    {
+        max = Math.Clamp(max, 1, 25);
+        var result = await reader.GetNewMessagesAsync(CurrentUserId, max, ct);
+
+        if (result.Status != GmailReadStatus.Success)
+            return Ok(new { status = result.Status.ToString() });
+
+        var items = new List<object>();
+        foreach (var m in result.Messages)
+        {
+            EmailClassification? classification = null;
+            if (classify)
+                classification = await _classifier.ClassifyAsync(m.Subject, m.BodyText, ct);
+
+            items.Add(new { message = m, classification });
+        }
+
+        return Ok(new
+        {
+            status = "Success",
+            startHistoryId = result.StartHistoryId,
+            latestHistoryId = result.LatestHistoryId,
+            totalNew = result.TotalNewMessages,
+            returned = items.Count,
+            items
+        });
     }
 }

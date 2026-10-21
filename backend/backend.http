@@ -1,6 +1,6 @@
 @backend_HostAddress = http://localhost:5083
-@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI0MTExMzIsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.6USQFEdyuUrrn78J2UACtlzqZrJxD1r57RzRdlByzL4
-@refresh_Token = Erub%2Fz1kHiEWo0g4rQvGI93hyazfWdJ2ixx0x%2BwVe1gLYilvruDQGTuYS1ntBky%2FLRegSleHWwaRMbol%2Fege3Q%3D%3D
+@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI1NjE5MjgsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.DwZCIzWywqGyQWzdnexaCRkdkaPfM7G3ivyKoAMcg0k
+@refresh_Token = tIIGPgLhhF40WI6pnoWpx8nMMG7Sn0OZFSV3q852meb3x9nSY7uIQlCWZLOTDVSVVFTsgJDijis4fm6yacmSCw%3D%3D
 //====================================================================== COMPANY ====================================================================
 
 GET {{backend_HostAddress}}/api/companies/getAll
@@ -151,5 +151,13 @@ GET {{backend_HostAddress}}/api/emailTest/protectSample
 Cookie: access_token={{access_Token}}
 
 ###after RESTARTING the backend, paste the protectedValue from above
-GET {{backend_HostAddress}}/api/emailTest/unprotectSample?value=PASTE_VALUE_HERE
+GET {{backend_HostAddress}}/api/emailTest/unprotectSample?value=CfDJ8AZb0v6edeFNq4KdAQ1KGHdnjScMmJ0tT1uh5JzCl6e0cY6eY41FxYX7nygUO71VO2veHaDMzukO4ymnProHSF4n0GUiqjNmdjPf4XZyR-JEf5m4ptViAjlMekt6_cNLhT1DAAbBw9-mX2NwgkLlFcg
+Cookie: access_token={{access_Token}}
+
+### Get the Google link
+GET {{backend_HostAddress}}/api/mailbox/connectUrl
+Cookie: access_token={{access_Token}}
+
+### Test the gmail catch with history checkpoint
+GET {{backend_HostAddress}}/api/emailTest/gmailNew
 Cookie: access_token={{access_Token}}

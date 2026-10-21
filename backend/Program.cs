@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.Extensions.Options;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -83,9 +84,11 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<IGmailConnectionService, GmailConnectionService>();
 builder.Services.AddDataProtection();
 builder.Services.AddSingleton<ITokenProtector, TokenProtector>();
+builder.Services.AddScoped<IGmailReader, GmailReader>();
 
 var app = builder.Build();
 

@@ -168,3 +168,9 @@ C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\obj\Debug\n
 C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\obj\Debug\net10.0\backend.pdb
 C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\obj\Debug\net10.0\backend.genruntimeconfig.cache
 C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\obj\Debug\net10.0\ref\backend.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\Google.Apis.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\Google.Apis.Auth.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\Google.Apis.Core.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\Google.Apis.Gmail.v1.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\System.Management.dll
+C:\Users\talal\Desktop\TaiLieu\Code\VS\JobApplicationTracker\backend\bin\Debug\net10.0\runtimes\win\lib\net7.0\System.Management.dll
