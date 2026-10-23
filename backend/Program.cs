@@ -89,6 +89,8 @@ builder.Services.AddScoped<IGmailConnectionService, GmailConnectionService>();
 builder.Services.AddDataProtection();
 builder.Services.AddSingleton<ITokenProtector, TokenProtector>();
 builder.Services.AddScoped<IGmailReader, GmailReader>();
+builder.Services.AddSingleton<IEmailPrefilter, EmailPrefilter>();
+builder.Services.AddScoped<IEmailSyncService, EmailSyncService>();
 
 var app = builder.Build();
 

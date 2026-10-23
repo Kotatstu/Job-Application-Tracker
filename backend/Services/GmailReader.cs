@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using backend.Data;
 using backend.DTOs;
 using backend.Interfaces;
+using backend.Models;
 using Google;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
@@ -80,13 +81,26 @@ public class GmailReader : IGmailReader
                 return new GmailReadResult { Status = GmailReadStatus.CheckpointExpired };
             }
 
+            var done = (await _context.EmailMessages.AsNoTracking()
+                    .Where(e => e.UserId == userId
+                            && ids.Contains(e.ExternalMessageId)
+                            && e.ProcessingStatus != EmailProcessingStatus.Pending)
+                    .Select(e => e.ExternalMessageId)
+                    .ToListAsync(ct))
+                .ToHashSet();
+
+            var toFetch = ids.Where(id => !done.Contains(id)).ToList();
+
             var result = new GmailReadResult
             {
                 Status = GmailReadStatus.Success,
                 StartHistoryId = startId.ToString(),
                 LatestHistoryId = latest,
-                TotalNewMessages = ids.Count
+                TotalNewMessages = ids.Count,
+                AlreadyProcessed = done.Count,
+                HasMore = toFetch.Count > max
             };
+
 
             foreach (var id in ids.Take(max))
             {
@@ -159,7 +173,10 @@ public class GmailReader : IGmailReader
             ReceivedAt = message.InternalDate.HasValue
                 ? DateTimeOffset.FromUnixTimeMilliseconds(message.InternalDate.Value).LocalDateTime
                 : DateTime.Now,
-            BodyText = EmailTextCleaner.Clean(ExtractText(message.Payload))
+            BodyText = EmailTextCleaner.Clean(ExtractText(message.Payload)),
+            LabelIds = message.LabelIds?.ToList() ?? new List<string>(),
+            HasListUnsubscribe = !string.IsNullOrEmpty(Header("List-Unsubscribe")),
+            Precedence = Header("Precedence"),
         };
     }
 

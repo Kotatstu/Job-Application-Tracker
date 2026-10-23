@@ -7,4 +7,7 @@ public class GmailMessageDto
     public string SenderEmail { get; set; } = string.Empty;
     public DateTime ReceivedAt { get; set; }
     public string BodyText { get; set; } = string.Empty;
+    public List<string> LabelIds { get; set; } = new();
+    public bool HasListUnsubscribe { get; set; }
+    public string Precedence { get; set; } = string.Empty;
 }

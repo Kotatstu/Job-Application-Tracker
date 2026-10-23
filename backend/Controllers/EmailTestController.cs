@@ -54,7 +54,7 @@ public class EmailTestController : ApiControllerBase
     public async Task<IActionResult> GmailNew(
         [FromServices] IGmailReader reader,
         [FromQuery] int max = 10,
-        [FromQuery] bool classify = true,
+        [FromQuery] bool classify = false,
         CancellationToken ct = default)
     {
         max = Math.Clamp(max, 1, 25);
@@ -82,5 +82,19 @@ public class EmailTestController : ApiControllerBase
             returned = items.Count,
             items
         });
+    }
+
+    [HttpPost]
+    [Route("sync")]
+    public async Task<IActionResult> Sync(
+        [FromServices] IEmailSyncService sync,
+        CancellationToken ct = default)
+    {
+        var summary = await sync.SyncAsync(CurrentUserId, ct);
+
+        if (summary.ReadStatus != GmailReadStatus.Success)
+            return Ok(new { status = summary.ReadStatus.ToString() });
+
+        return Ok(new { status = "Success", summary });
     }
 }

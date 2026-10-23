@@ -313,6 +313,11 @@ namespace backend.Migrations
                     b.Property<DateTime?>("ProcessedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ProcessingStatus")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<DateTime>("ReceivedAt")
                         .HasColumnType("datetime2");
 

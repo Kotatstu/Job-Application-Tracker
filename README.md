@@ -1,14 +1,10 @@
 # Job Application Tracker
 
-A full-stack web app for tracking job applications - company, role,
-status history, and the original job posting, all in one place. Built
-as a learning project to practice a clean, layered ASP.NET Core
-backend paired with a modern React frontend, with real authentication
-rather than a stubbed-out login.
+The originally idea is to have an app that (auto) keep track of every job application I have applied for. Without depend on the hiring posted on the website, this system catch the email confirmation everytime an application is sent.
 
-A planned second phase will scan a connected Gmail inbox for
-application-related emails and stage detected updates for manual
-review, instead of writing to your data automatically.
+On the first phase, there a fully working backend, frontend, that let user to manually create a new job application record. On the seccond phase, I have implemented a workflow that catch google cloud gmail API, feed it to a local LLM to classify and write it into a given scheme. Ultimately "auto" keeping track of every job application (That got send to gmail).
+
+This is a full-stack project that I also use as a chance to learn software architect and new tech stacks. The LLM workflow doesn't have a UI yet. The project is still underdevelopment.
 
 ## Features
 
@@ -89,5 +85,4 @@ The dev server proxies `/api` requests to the backend — see
 - [x] Core CRUD
 - [x] Authentication (Identity, JWT, refresh rotation)
 - [x] Frontend (all core pages, shadcn/ui design pass)
-- [ ] Gmail integration — detect application-related emails
-- [ ] Review queue for email-detected updates
+- [x] Gmail integration — detect application-related emails

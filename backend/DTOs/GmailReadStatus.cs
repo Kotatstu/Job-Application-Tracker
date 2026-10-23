@@ -18,4 +18,6 @@ public class GmailReadResult
     public string? StartHistoryId { get; set; }
     public string? LatestHistoryId { get; set; }
     public int TotalNewMessages { get; set; }
+    public int AlreadyProcessed { get; set; }
+    public bool HasMore { get; set; }
 }

@@ -91,5 +91,9 @@ public class AppDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<G
                 .HasForeignKey(p => p.SuggestedJobApplicationId).OnDelete(DeleteBehavior.Restrict);
             entity.HasIndex(p => p.EmailMessageId).IsUnique();
         });
+
+        modelBuilder.Entity<EmailMessage>()
+        .Property(e => e.ProcessingStatus)
+        .HasDefaultValue(EmailProcessingStatus.Pending);
     }
 }

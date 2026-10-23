@@ -13,4 +13,6 @@ public class EmailMessage
     public bool IsJobRelated { get; set; }
     public DateTime? ProcessedAt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    public EmailProcessingStatus ProcessingStatus { get; set; } = EmailProcessingStatus.Pending;
 }
