@@ -102,7 +102,7 @@ public class GmailReader : IGmailReader
             };
 
 
-            foreach (var id in ids.Take(max))
+            foreach (var id in toFetch.Take(max))
             {
                 try
                 {

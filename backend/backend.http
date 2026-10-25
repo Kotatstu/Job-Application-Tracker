@@ -1,6 +1,6 @@
 @backend_HostAddress = http://localhost:5083
-@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI3Mjc5MTYsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.3TEXLgik2S_ftQHOFEXBrXKOL2zwTK5De6TdUNSpk7s
-@refresh_Token = Btm%2BQ0H6kcanpEbaixAYSgxLzjJO1mNTxr9Q2Al%2FhElCpm%2BLzBcXlfbeUe9ump%2FcFzGPNH5JZ9O23C7D6K3RJA%3D%3D
+@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI5MTcxNTQsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.46bGfBvrD-7N6TyZGpCHcPnFsyGzbw1YaC1m163vKUk
+@refresh_Token = 5%2F4wZMw07HPrfu8C3sNlkRb5wfk26lDaas4951er1zZbym1lD8R6nKaeYb2oUMboRbyBR0SKqo362WFk1F4C%2FA%3D%3D
 //====================================================================== COMPANY ====================================================================
 
 GET {{backend_HostAddress}}/api/companies/getAll
@@ -164,9 +164,4 @@ Cookie: access_token={{access_Token}}
 
 ###Test sync
 POST {{backend_HostAddress}}/api/emailTest/sync
-Content-Type: application/json
-Cookie: access_token=={{access_Token}}
-
-{
-  "email": "kotatstu0303@gmail.com",
-}
+Cookie: access_token={{access_Token}}
