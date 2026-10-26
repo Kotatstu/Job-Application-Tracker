@@ -81,7 +81,7 @@ public class JobApplicationService : IJobApplicationService
         return MapToDTO(ja);
     }    
 
-    public async Task<(JobApplicationResponseDTO?, JobApplicationCreateResult)> CreateAsync(JobApplicationCreateDTO dto, Guid userId)
+    public async Task<(JobApplicationResponseDTO?, JobApplicationCreateResult)> CreateAsync(JobApplicationCreateDTO dto, Guid userId,  string source = "Manual", int? sourceEmailId = null, DateTime? changedAt = null)
     {
         //Check if the COMPANY id exist
         var existing = await _context.Companies.FirstOrDefaultAsync(c => 
@@ -113,7 +113,8 @@ public class JobApplicationService : IJobApplicationService
             Status = "Applied",
             ChangedAt = DateTime.Now,
             Note = null,
-            Source = "Manual"
+            Source = source,
+            SourceEmailId = sourceEmailId,
         };
 
         _context.ApplicationStatusHistory.Add(history);
@@ -180,7 +181,7 @@ public class JobApplicationService : IJobApplicationService
         return (MapToDTO(ja), JobApplicationUpdateResponse.Success);
     }
 
-    public async Task<(JobApplicationResponseDTO?, UpdateStatusResult)> UpdateStatusAsync(ChangeStatusDTO dto, int id, Guid userId)
+    public async Task<(JobApplicationResponseDTO?, UpdateStatusResult)> UpdateStatusAsync(ChangeStatusDTO dto, int id, Guid userId, string source = "Manual", int? sourceEmailId = null, DateTime? changedAt = null)
     {
         var ja = await _context.JobApplications
             .Include(ja => ja.Company)
@@ -203,7 +204,8 @@ public class JobApplicationService : IJobApplicationService
             Status = dto.Status,
             ChangedAt = DateTime.Now,
             Note = dto.Note,
-            Source = "Manual",
+            Source = source,
+            SourceEmailId = sourceEmailId,
         };
 
         _context.ApplicationStatusHistory.Add(h);

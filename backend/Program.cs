@@ -91,6 +91,10 @@ builder.Services.AddSingleton<ITokenProtector, TokenProtector>();
 builder.Services.AddScoped<IGmailReader, GmailReader>();
 builder.Services.AddSingleton<IEmailPrefilter, EmailPrefilter>();
 builder.Services.AddScoped<IEmailSyncService, EmailSyncService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddSingleton<SyncCoordinator>();
+builder.Services.AddHostedService<SyncWorker>();
+builder.Services.AddScoped<IMailboxService, MailboxService>();
 
 var app = builder.Build();
 

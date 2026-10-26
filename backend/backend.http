@@ -1,6 +1,6 @@
 @backend_HostAddress = http://localhost:5083
-@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTI5MTcxNTQsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0.46bGfBvrD-7N6TyZGpCHcPnFsyGzbw1YaC1m163vKUk
-@refresh_Token = 5%2F4wZMw07HPrfu8C3sNlkRb5wfk26lDaas4951er1zZbym1lD8R6nKaeYb2oUMboRbyBR0SKqo362WFk1F4C%2FA%3D%3D
+@access_Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3OGQzMDEwLTBhYzctNDk3OC0wYmEzLTA4ZGYwYTU2MzdiYSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InRlc3QwMUBnbWFpbC5jb20iLCJleHAiOjE3OTMwMTU2NjYsImlzcyI6IkpvYlRyYWNrZXJBcGkiLCJhdWQiOiJKb2JUcmFja2VyQ2xpZW50In0._ft_h25Aw75p0leUkaAdr-run81TN5o7JTKEVigxUcg
+@refresh_Token = M4YDzzuuIWEaWUga5w6yIvQLP12IkAW8fUdzut%2BElnoWI6VbCEAH4jN4y61coz96r%2BE8UrYiWmHF%2Fq6FU%2FaGaw%3D%3D
 //====================================================================== COMPANY ====================================================================
 
 GET {{backend_HostAddress}}/api/companies/getAll
@@ -164,4 +164,54 @@ Cookie: access_token={{access_Token}}
 
 ###Test sync
 POST {{backend_HostAddress}}/api/emailTest/sync
+Cookie: access_token={{access_Token}}
+
+//================================================================= REVIEW ====================================================
+### Summary (badge counts)
+GET {{backend_HostAddress}}/api/review/summary
+Cookie: access_token={{access_Token}}
+
+### Pending new applications (add ?reviewStatus=Confirmed or Dismissed to see old ones)
+GET {{backend_HostAddress}}/api/review/applications
+Cookie: access_token={{access_Token}}
+
+### Pending status changes
+GET {{backend_HostAddress}}/api/review/status-changes
+Cookie: access_token={{access_Token}}
+
+### Confirm a pending application (use real ids from the list above)
+POST {{backend_HostAddress}}/api/review/applications/1/confirm
+Cookie: access_token={{access_Token}}
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "jobTitle": "Backend Engineer",
+  "status": "Applied"
+}
+
+### Dismiss a pending application
+POST {{backend_HostAddress}}/api/review/applications/2/dismiss
+Cookie: access_token={{access_Token}}
+
+### Confirm a pending status change
+POST {{backend_HostAddress}}/api/review/status-changes/1/confirm
+Cookie: access_token={{access_Token}}
+Content-Type: application/json
+
+{
+  "jobApplicationId": 1,
+  "status": "Interview"
+}
+
+### Dismiss a pending status change
+POST {{backend_HostAddress}}/api/review/status-changes/2/dismiss
+Cookie: access_token={{access_Token}}
+
+### Status
+GET {{backend_HostAddress}}/api/mailbox/status
+Cookie: access_token={{access_Token}}
+
+### Start a background sync (expect 202; repeat at once for 409; after it ends, within 60 s for 429)
+POST {{backend_HostAddress}}/api/mailbox/sync
 Cookie: access_token={{access_Token}}

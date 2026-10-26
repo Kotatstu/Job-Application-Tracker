@@ -10,6 +10,7 @@ public interface ICompanyService
     Task<(CompanyResponseDTO Company, bool WasCreated)> CreateAsync(CompanyCreateDTO dto, Guid userId);
     Task<CompanyResponseDTO?> GetByIdAsync(int id, Guid userId);
     Task<(CompanyResponseDTO?, CompanyUpdateResult)> UpdateByIdAsync(int id, Guid userId, CompanyUpdateDTO dto);
+    
     // //Pactice delete pattern only
     // Task<bool> DeleteByIdAsync(int id, Guid userId);
 }

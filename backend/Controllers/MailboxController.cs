@@ -13,11 +13,13 @@ public class MailboxController : ApiControllerBase
 {
     private readonly IGmailConnectionService _connection;
     private readonly GoogleOptions _google;
+    private readonly IMailboxService _mailbox;
 
-    public MailboxController(IGmailConnectionService connection, IOptions<GoogleOptions> google)
+    public MailboxController(IGmailConnectionService connection, IOptions<GoogleOptions> google, IMailboxService mailbox)
     {
         _connection = connection;
         _google = google.Value;
+        _mailbox = mailbox;
     }
 
     [HttpGet]
@@ -57,5 +59,26 @@ public class MailboxController : ApiControllerBase
         }
 
         return Redirect($"{_google.FrontendReturnPath}?status={status}");
+    }
+
+    
+    [HttpGet("status")]
+    public async Task<IActionResult> Status()
+        => Ok(await _mailbox.GetStatusAsync(CurrentUserId));
+    
+    [HttpPost("sync")]
+    public async Task<IActionResult> Sync()
+    {
+        var (result, retryAfter) = await _mailbox.RequestSyncAsync(CurrentUserId);
+    
+        return result switch
+        {
+            SyncRequestResult.Started => Accepted(),
+            SyncRequestResult.AlreadyRunning => Conflict(new { message = "A sync is already running." }),
+            SyncRequestResult.CooldownActive => StatusCode(StatusCodes.Status429TooManyRequests,
+                new { message = "Please wait before checking again.", retryAfterSeconds = retryAfter }),
+            SyncRequestResult.NotConnected => BadRequest(new { message = "No Gmail account is connected." }),
+            _ => StatusCode(500)
+        };
     }
 }
