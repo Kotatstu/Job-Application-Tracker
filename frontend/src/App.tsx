@@ -8,6 +8,8 @@ import { RegisterPage } from './pages/RegisterPage'
 import { Layout } from './components/Layout'
 import { CreateApplicationPage } from './pages/CreateApplicationPage'
 import { EditApplicationPage } from './pages/EditApplicationPage'
+import { MailboxPage } from './pages/MailboxPage'
+import { ReviewPage } from './pages/ReviewPage'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/companies/:id" element={<CompanyDetailPage />} />
           <Route path="/applications/new" element={<CreateApplicationPage />} />
           <Route path="/applications/:id/edit" element={<EditApplicationPage />} />
+          <Route path="/mailbox" element={<MailboxPage />} />          
+          <Route path="/review" element={<ReviewPage />} />
         </Route>
       </Route>
     </Routes>

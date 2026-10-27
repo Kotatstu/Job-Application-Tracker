@@ -1,13 +1,17 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { Briefcase, LogOut, Plus } from 'lucide-react'
+import { Badge, Briefcase, Inbox, LogOut, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '../hooks/useAuth'
 import { buttonVariants } from '@/components/ui/button'
+import { useReviewSummary } from '@/hooks/useReview'
 
 export function Layout() {
     const { user, logout } = useAuth()
     const navigate = useNavigate()
+    const { data: summary } = useReviewSummary()
+    const pending = (summary?.pendingApplications ?? 0) + (summary?.pendingStatusChanges ?? 0)
+
 
     const handleLogout = async () => {
         await logout()
@@ -28,6 +32,12 @@ export function Layout() {
                         <Link to="/applications/new" className={buttonVariants({ size: 'sm' })}>
                             <Plus className="h-4 w-4" />
                             New Application
+                        </Link>
+
+                        <Link to="/review" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
+                            <Inbox className="h-4 w-4" />
+                            Review
+                            {pending > 0 && <Badge>{pending}</Badge>}
                         </Link>
 
                         <span className="text-sm text-muted-foreground hidden sm:inline">
