@@ -14,11 +14,9 @@ public record SyncSnapshot(
     string? LastError,
     int CooldownRemainingSeconds);
 
-// Holds the per-user lock, the queue of requested syncs, and the result of the last run.
-// State lives in memory only: it resets when the app restarts.
 public class SyncCoordinator
 {
-    private const int CooldownSeconds = 60;   // minimum gap between the end of one run and the next request
+    public const int CooldownSeconds = 60;
 
     private readonly Channel<Guid> _queue = Channel.CreateUnbounded<Guid>();
     private readonly ConcurrentDictionary<Guid, UserSyncState> _states = new();

@@ -60,4 +60,12 @@ public class MailboxService : IMailboxService
 
         return _coordinator.TryRequest(userId);
     }
+
+    public async Task<List<Guid>> GetConnectedUserIdsAsync()
+    {
+        return await _context.MailboxConnections.AsNoTracking()
+            .Where(m => m.Provider == "Gmail")
+            .Select(m => m.UserId)
+            .ToListAsync();
+    }
 }

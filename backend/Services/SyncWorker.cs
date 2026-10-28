@@ -1,3 +1,4 @@
+using backend.DTOs;
 using backend.Interfaces;
 
 namespace backend.Services;
@@ -31,6 +32,7 @@ public class SyncWorker : BackgroundService
                     // stoppingToken, not a request token: the run must outlive the HTTP request
                     var summary = await sync.SyncAsync(userId, stoppingToken);
                     _coordinator.MarkFinished(userId, summary, null);
+                    ScheduleFollowUp(userId, summary, stoppingToken);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
                 {
@@ -48,5 +50,28 @@ public class SyncWorker : BackgroundService
         {
             // normal shutdown
         }
+    }
+
+    private void ScheduleFollowUp(Guid userId, SyncSummary summary, CancellationToken ct)
+    {
+        var moreWaiting = summary.ReadStatus == GmailReadStatus.Success
+            && !summary.CheckpointAdvanced
+            && summary.Failed == 0
+            && summary.Read > 0;
+
+        if (!moreWaiting) return;
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(SyncCoordinator.CooldownSeconds + 2), ct);
+                _coordinator.TryRequest(userId);   // ignored if the user or a poll started one meanwhile
+            }
+            catch (OperationCanceledException)
+            {
+                // shutting down
+            }
+        }, ct);
     }
 }

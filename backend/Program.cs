@@ -78,6 +78,12 @@ builder.Services.AddOptions<GoogleOptions>()
               "Google:ClientId, Google:ClientSecret and Google:RedirectUri must all be configured.")
     .ValidateOnStart();
 
+builder.Services.AddOptions<SyncOptions>()
+    .Bind(builder.Configuration.GetSection("Sync"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+builder.Services.AddHostedService<PollingWorker>();
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
