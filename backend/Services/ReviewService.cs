@@ -77,8 +77,6 @@ public class ReviewService : IReviewService
 
         var appliedAt = dto.DateApplied ?? email.ReceivedAt;
 
-        // One transaction: company is already chosen, so application + history + status change + pending update
-        // either all happen or none do. (Leaving without Commit rolls everything back.)
         await using var tx = await _context.Database.BeginTransactionAsync();
 
         var (created, createResult) = await _applications.CreateAsync(
@@ -97,7 +95,6 @@ public class ReviewService : IReviewService
 
         var result = created;
 
-        // Every application starts as "Applied"; anything else is a second step linked to the email
         if (!string.Equals(status, "Applied", StringComparison.OrdinalIgnoreCase))
         {
             var statusAt = email.ReceivedAt < appliedAt ? appliedAt : email.ReceivedAt;
@@ -139,7 +136,6 @@ public class ReviewService : IReviewService
 
     public async Task<List<PendingStatusChangeDTO>> GetStatusChangesAsync(Guid userId, string reviewStatus)
     {
-        // PendingStatusChange has no navigation to the application, so it is a left join by id
         var query =
             from p in _context.PendingStatusChanges.AsNoTracking()
             where p.UserId == userId && p.ReviewStatus == reviewStatus

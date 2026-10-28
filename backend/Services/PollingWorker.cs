@@ -56,7 +56,6 @@ public class PollingWorker : BackgroundService
 
             foreach (var userId in await mailbox.GetConnectedUserIdsAsync())
             {
-                // A dead token stays dead until the user reconnects, so do not keep knocking on Google
                 var status = await mailbox.GetStatusAsync(userId);
                 if (status.NeedsReconnect)
                 {

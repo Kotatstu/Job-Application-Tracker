@@ -14,7 +14,7 @@ public class EmailSyncService : IEmailSyncService
     private const int BatchSize = 25;
     private const int SnippetLength = 300;
 
-    // Words dropped from company names before comparing ("Acme Inc" matches "Acme").
+    //words dropped from company names before comparing ("Acme Inc" matches "Acme").
     private static readonly string[] CompanySuffixes =
         { "inc", "ltd", "llc", "corp", "co", "company", "jsc", "limited", "corporation", "tnhh", "cp" };
 
@@ -57,8 +57,6 @@ public class EmailSyncService : IEmailSyncService
             }
         }
 
-        // Commit the checkpoint only when everything waiting was handled and nothing failed.
-        // This also runs when there was no new mail, which keeps the checkpoint fresh.
         if (!read.HasMore && summary.Failed == 0 && read.LatestHistoryId is not null)
         {
             var connection = await _context.MailboxConnections
@@ -78,7 +76,6 @@ public class EmailSyncService : IEmailSyncService
 
     private async Task ProcessAsync(Guid userId, GmailMessageDto email, SyncSummary summary, CancellationToken ct)
     {
-        // 1. Already seen? A row that is no longer Pending was fully handled.
         var row = await _context.EmailMessages
             .FirstOrDefaultAsync(e => e.UserId == userId && e.ExternalMessageId == email.ExternalMessageId, ct);
 
@@ -88,7 +85,6 @@ public class EmailSyncService : IEmailSyncService
             return;
         }
 
-        // 2. Classify. null means "could not tell", never "no": save nothing, retry next run.
         var result = await _classifier.ClassifyAsync(email.Subject, email.BodyText, ct);
         if (result is null)
         {
@@ -97,7 +93,6 @@ public class EmailSyncService : IEmailSyncService
             return;
         }
 
-        // 3. Remember
         row ??= NewRow(userId, email);
 
         var jobRelated = result.IsJobRelated && result.Kind != "other";
@@ -117,14 +112,11 @@ public class EmailSyncService : IEmailSyncService
         row.Snippet = Truncate(email.BodyText, SnippetLength);
         summary.JobRelated++;
 
-        // 4. Match the company, then its applications
         var apps = await FindApplicationsAsync(userId, result.CompanyName, ct);
         var status = MapStatus(result.Kind);
 
-        // 5. Stage. The email row and its pending row are saved together in one SaveChanges.
         if (apps.Count == 0)
         {
-            // Company or application not tracked yet: suggest a new application
             _context.PendingJobApplications.Add(new PendingJobApplication
             {
                 UserId = userId,
@@ -138,13 +130,11 @@ public class EmailSyncService : IEmailSyncService
         }
         else if (result.Kind == "application_received")
         {
-            // Already tracked, and a confirmation tells us nothing new
             row.ProcessingStatus = EmailProcessingStatus.NoAction;
             summary.NoAction++;
         }
         else
         {
-            // Interview, offer or rejection for a tracked company: suggest a status change
             _context.PendingStatusChanges.Add(new PendingStatusChange
             {
                 UserId = userId,
@@ -165,7 +155,6 @@ public class EmailSyncService : IEmailSyncService
         var wanted = Normalize(companyName);
         if (wanted.Length == 0) return new List<JobApplication>();
 
-        // Normalize can't run inside SQL, so compare in memory (fine at personal scale)
         var companies = await _context.Companies
             .Where(c => c.UserId == userId)
             .ToListAsync(ct);
@@ -182,7 +171,6 @@ public class EmailSyncService : IEmailSyncService
             .ToListAsync(ct);
     }
 
-    // One application: that one. Several: best title overlap, or null (user decides) when nothing overlaps.
     private static int? PickApplicationId(List<JobApplication> apps, string? title)
     {
         if (apps.Count == 1) return apps[0].Id;
@@ -219,7 +207,6 @@ public class EmailSyncService : IEmailSyncService
         _ => "Applied"
     };
 
-    // Lowercase, remove accents (Việt -> viet, Đức -> duc), keep letters and digits of any script
     private static string Fold(string? text)
     {
         var decomposed = (text ?? "").ToLowerInvariant().Replace('đ', 'd').Normalize(NormalizationForm.FormD);

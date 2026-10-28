@@ -38,7 +38,6 @@ public class MailboxService : IMailboxService
             CooldownRemainingSeconds = snap.CooldownRemainingSeconds
         };
 
-        // A reconnect resets the checkpoint, so a "reconnect needed" result from before it no longer counts
         if (connection is not null && snap.LastSummary is { } summary && snap.FinishedAt is { } finished
             && finished > connection.ConnectedAt)
         {

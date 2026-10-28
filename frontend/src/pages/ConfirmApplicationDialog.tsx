@@ -42,7 +42,6 @@ export function ConfirmApplicationDialog({ item, onClose }: Props) {
     )
 }
 
-// yyyy-MM-dd in the local time zone, as a date input expects
 function toDateInput(iso: string): string {
     const d = new Date(iso)
     const pad = (n: number) => String(n).padStart(2, '0')
@@ -62,7 +61,6 @@ function ConfirmApplicationForm({ item, onClose }: { item: PendingApplication; o
     const [location, setLocation] = useState('')
     const [notes, setNotes] = useState('')
 
-    // "Use the suggested company": pick the existing one with that name, or add it
     const suggestion = item.companyNameGuess.trim()
     const hasSuggestion = suggestion !== '' && suggestion.toLowerCase() !== 'unknown'
     const existing = companies?.find((c) => c.companyName.toLowerCase() === suggestion.toLowerCase())

@@ -5,15 +5,15 @@ using backend.Services;
 public class SyncSummary
 {
     public GmailReadStatus ReadStatus { get; set; }
-    public int Read { get; set; }              // emails fetched this run
-    public int AlreadyDone { get; set; }       // dropped because they were handled before
+    public int Read { get; set; }  
+    public int AlreadyDone { get; set; } 
     public int NotJobRelated { get; set; }
-    public int JobRelated { get; set; }        // NewApplications + StatusChanges + NoAction
-    public int NewApplications { get; set; }   // staged as PendingJobApplications
-    public int StatusChanges { get; set; }     // staged as PendingStatusChanges
-    public int NoAction { get; set; }          // confirmation for an application already tracked
-    public int Failed { get; set; }            // classifier gave no answer, or saving threw
-    public bool CheckpointAdvanced { get; set; }   // true when everything waiting was handled and nothing failed
+    public int JobRelated { get; set; }  
+    public int NewApplications { get; set; }  
+    public int StatusChanges { get; set; } 
+    public int NoAction { get; set; }      
+    public int Failed { get; set; }       
+    public bool CheckpointAdvanced { get; set; } 
 }
 
 public interface IEmailSyncService

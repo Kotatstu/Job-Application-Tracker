@@ -8,7 +8,6 @@ public class EmailPrefilter : IEmailPrefilter
 {
     private const RegexOptions Opts = RegexOptions.IgnoreCase | RegexOptions.Compiled;
 
-    // Rule 0: strong "this is about MY application" signals always pass
     private static readonly Regex Rescue = new(
         @"your application|thank(s| you) for applying|application (received|status|update)|" +
         @"interview|assessment|coding (test|challenge)|unfortunately|regret to inform|" +

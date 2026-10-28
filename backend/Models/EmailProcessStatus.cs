@@ -2,9 +2,9 @@ namespace backend.Models;
 
 public enum EmailProcessingStatus
 {
-    Pending = 0,        // saved, not judged yet
-    NotJobRelated = 1,  // classifier said no; final
-    Staged = 2,          // job related, written to pending tables; final
+    Pending = 0,    
+    NotJobRelated = 1,
+    Staged = 2,
     NoAction = 3,
     Skipped = 4
 }

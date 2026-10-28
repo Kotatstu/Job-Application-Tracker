@@ -10,7 +10,6 @@ public static class EmailTextCleaner
     {
         var normalized = text.Replace("\r\n", "\n").Replace('\r', '\n');
 
-        // everything after "On ... wrote:" is a quoted earlier message
         var wrote = Regex.Match(normalized, @"^On .{5,200} wrote:\s*$",
             RegexOptions.Multiline | RegexOptions.IgnoreCase);
         if (wrote.Success)

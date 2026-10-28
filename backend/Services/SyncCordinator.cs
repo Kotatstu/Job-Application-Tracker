@@ -76,7 +76,6 @@ public class SyncCoordinator
         }
     }
 
-    // Caller must hold the lock on state
     private static int RemainingCooldown(UserSyncState state)
     {
         if (state.State != SyncRunState.Idle || state.FinishedAt is null) return 0;

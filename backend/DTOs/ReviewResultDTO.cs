@@ -1,7 +1,7 @@
 public enum ReviewResult
 {
     Success,
-    NotFound,            // pending item missing or not the users
+    NotFound, 
     AlreadyReviewed,
     CompanyNotFound,
     ApplicationNotFound,

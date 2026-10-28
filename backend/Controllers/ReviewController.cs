@@ -1,4 +1,3 @@
-
 using backend.DTOs;
 using backend.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +19,6 @@ public class ReviewController : ApiControllerBase
     [HttpGet("summary")]
     public async Task<IActionResult> Summary()
         => Ok(await _review.GetSummaryAsync(CurrentUserId));
-
-    // ---------- Pending new applications ----------
 
     [HttpGet("applications")]
     public async Task<IActionResult> GetApplications([FromQuery] string reviewStatus = "Pending")
@@ -45,8 +42,6 @@ public class ReviewController : ApiControllerBase
         var result = await _review.DismissApplicationAsync(id, CurrentUserId);
         return result == ReviewResult.Success ? NoContent() : ToError(result);
     }
-
-    // ---------- Pending status changes ----------
 
     [HttpGet("status-changes")]
     public async Task<IActionResult> GetStatusChanges([FromQuery] string reviewStatus = "Pending")
